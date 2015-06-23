@@ -53,16 +53,6 @@
     }
 }
 
--(void)viewDidUnload
-{
-    // Release anything that can be recreated in viewDidLoad or on demand.
-    // e.g. self.myOutlet = nil;
-    self.stocks = nil;
-    self.graph  = nil;
-
-    [super viewDidUnload];
-}
-
 #pragma mark Table view methods
 
 -(void)inspectStock:(APYahooDataPuller *)aStock
@@ -189,12 +179,6 @@
     return cell;
 }
 
-// Override to allow orientations other than the default portrait orientation.
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
-
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     self.graph.view.frame = self.view.bounds;
@@ -310,7 +294,7 @@
  *
  * if (editingStyle == UITableViewCellEditingStyleDelete) {
  * // Delete the row from the data source.
- * [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ * [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
  * }
  * else if (editingStyle == UITableViewCellEditingStyleInsert) {
  * // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.

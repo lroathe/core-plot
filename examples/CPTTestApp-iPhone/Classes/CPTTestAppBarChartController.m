@@ -18,11 +18,6 @@
 @synthesize timer;
 @synthesize barChart;
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return YES;
-}
-
 #pragma mark -
 #pragma mark Initialization and teardown
 
@@ -66,7 +61,7 @@
     newGraph.paddingBottom = 0.0;
 
     newGraph.plotAreaFrame.paddingLeft   = 70.0;
-    newGraph.plotAreaFrame.paddingTop    = 20.0;
+    newGraph.plotAreaFrame.paddingTop    = 55.0;
     newGraph.plotAreaFrame.paddingRight  = 20.0;
     newGraph.plotAreaFrame.paddingBottom = 80.0;
 
@@ -74,34 +69,18 @@
     NSString *lineOne = @"Graph Title";
     NSString *lineTwo = @"Line 2";
 
-    BOOL hasAttributedStringAdditions = (&NSFontAttributeName != NULL) &&
-                                        (&NSForegroundColorAttributeName != NULL) &&
-                                        (&NSParagraphStyleAttributeName != NULL);
+    NSMutableAttributedString *graphTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", lineOne, lineTwo]];
+    [graphTitle addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, lineOne.length)];
+    [graphTitle addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(lineOne.length + 1, lineTwo.length)];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = CPTTextAlignmentCenter;
+    [graphTitle addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, graphTitle.length)];
+    UIFont *titleFont = [UIFont fontWithName:@"Helvetica-Bold" size:16.0];
+    [graphTitle addAttribute:NSFontAttributeName value:titleFont range:NSMakeRange(0, lineOne.length)];
+    titleFont = [UIFont fontWithName:@"Helvetica" size:12.0];
+    [graphTitle addAttribute:NSFontAttributeName value:titleFont range:NSMakeRange(lineOne.length + 1, lineTwo.length)];
 
-    if ( hasAttributedStringAdditions ) {
-        NSMutableAttributedString *graphTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", lineOne, lineTwo]];
-        [graphTitle addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, lineOne.length)];
-        [graphTitle addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(lineOne.length + 1, lineTwo.length)];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.alignment = CPTTextAlignmentCenter;
-        [graphTitle addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, graphTitle.length)];
-        UIFont *titleFont = [UIFont fontWithName:@"Helvetica-Bold" size:16.0];
-        [graphTitle addAttribute:NSFontAttributeName value:titleFont range:NSMakeRange(0, lineOne.length)];
-        titleFont = [UIFont fontWithName:@"Helvetica" size:12.0];
-        [graphTitle addAttribute:NSFontAttributeName value:titleFont range:NSMakeRange(lineOne.length + 1, lineTwo.length)];
-
-        newGraph.attributedTitle = graphTitle;
-    }
-    else {
-        CPTMutableTextStyle *titleStyle = [CPTMutableTextStyle textStyle];
-        titleStyle.color         = [CPTColor whiteColor];
-        titleStyle.fontName      = @"Helvetica-Bold";
-        titleStyle.fontSize      = 16.0;
-        titleStyle.textAlignment = CPTTextAlignmentCenter;
-
-        newGraph.title          = [NSString stringWithFormat:@"%@\n%@", lineOne, lineTwo];
-        newGraph.titleTextStyle = titleStyle;
-    }
+    newGraph.attributedTitle = graphTitle;
 
     newGraph.titleDisplacement        = CGPointMake(0.0, -20.0);
     newGraph.titlePlotAreaFrameAnchor = CPTRectAnchorTop;

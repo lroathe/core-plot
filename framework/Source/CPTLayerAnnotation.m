@@ -25,7 +25,7 @@
  **/
 @implementation CPTLayerAnnotation
 
-/** @property __cpt_weak CPTLayer *anchorLayer
+/** @property cpt_weak CPTLayer *anchorLayer
  *  @brief The reference layer.
  **/
 @synthesize anchorLayer;
@@ -104,9 +104,15 @@
     [coder encodeInteger:self.rectAnchor forKey:@"CPTLayerAnnotation.rectAnchor"];
 }
 
+/// @endcond
+
+/** @brief Returns an object initialized from data in a given unarchiver.
+ *  @param coder An unarchiver object.
+ *  @return An object initialized from data in a given unarchiver.
+ */
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
-    if ( (self = [super initWithCoder:coder]) ) {
+    if ( (self = [super init]) ) {
         anchorLayer  = [coder decodeObjectForKey:@"CPTLayerAnnotation.anchorLayer"];
         xConstraints = [coder decodeObjectForKey:@"CPTLayerAnnotation.xConstraints"];
         yConstraints = [coder decodeObjectForKey:@"CPTLayerAnnotation.yConstraints"];
@@ -114,8 +120,6 @@
     }
     return self;
 }
-
-/// @endcond
 
 #pragma mark -
 #pragma mark Layout

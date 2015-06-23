@@ -102,16 +102,24 @@
     [coder encodeConditionalObject:self.plotSpace forKey:@"CPTPlotSpaceAnnotation.plotSpace"];
 }
 
+/// @endcond
+
+/** @brief Returns an object initialized from data in a given unarchiver.
+ *  @param coder An unarchiver object.
+ *  @return An object initialized from data in a given unarchiver.
+ */
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
-    if ( (self = [super initWithCoder:coder]) ) {
+    if ( (self = [super init]) ) {
         anchorPlotPoint = [[coder decodeObjectForKey:@"CPTPlotSpaceAnnotation.anchorPlotPoint"] copy];
-        plotSpace       = [coder decodeObjectForKey:@"CPTPlotSpaceAnnotation.plotSpace"];
+
+        CPTPlotSpace *thePlotSpace = [coder decodeObjectForKey:@"CPTPlotSpaceAnnotation.plotSpace"];
+        if ( thePlotSpace ) {
+            plotSpace = thePlotSpace;
+        }
     }
     return self;
 }
-
-/// @endcond
 
 #pragma mark -
 #pragma mark Layout

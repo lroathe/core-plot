@@ -20,11 +20,6 @@
 @synthesize dataForPlot;
 @synthesize graph;
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return YES;
-}
-
 #pragma mark -
 #pragma mark Initialization and teardown
 
@@ -43,7 +38,7 @@
     hostingView.hostedGraph     = newGraph;
 
     newGraph.paddingLeft   = 10.0;
-    newGraph.paddingTop    = 10.0;
+    newGraph.paddingTop    = 20.0;
     newGraph.paddingRight  = 10.0;
     newGraph.paddingBottom = 10.0;
 
@@ -181,10 +176,10 @@
 
 -(BOOL)axis:(CPTAxis *)axis shouldUpdateAxisLabelsAtLocations:(NSSet *)locations
 {
-    static CPTTextStyle *positiveStyle = nil;
-    static CPTTextStyle *negativeStyle = nil;
-    static dispatch_once_t positiveOnce;
-    static dispatch_once_t negativeOnce;
+    static CPTTextStyle *positiveStyle  = nil;
+    static CPTTextStyle *negativeStyle  = nil;
+    static dispatch_once_t positiveOnce = 0;
+    static dispatch_once_t negativeOnce = 0;
 
     NSFormatter *formatter = axis.labelFormatter;
     CGFloat labelOffset    = axis.labelOffset;

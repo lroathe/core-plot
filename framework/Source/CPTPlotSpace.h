@@ -159,8 +159,8 @@ extern NSString *const CPTPlotSpaceDisplacementKey;
 @property (nonatomic, readwrite, copy) id<NSCopying, NSCoding, NSObject> identifier;
 @property (nonatomic, readwrite) BOOL allowsUserInteraction;
 @property (nonatomic, readonly) BOOL isDragging;
-@property (nonatomic, readwrite, cpt_weak_property) __cpt_weak CPTGraph *graph;
-@property (nonatomic, readwrite, cpt_weak_property) __cpt_weak id<CPTPlotSpaceDelegate> delegate;
+@property (nonatomic, readwrite, cpt_weak_property) cpt_weak CPTGraph *graph;
+@property (nonatomic, readwrite, cpt_weak_property) cpt_weak id<CPTPlotSpaceDelegate> delegate;
 
 @property (nonatomic, readonly) NSUInteger numberOfCoordinates;
 
@@ -175,6 +175,12 @@ extern NSString *const CPTPlotSpaceDisplacementKey;
 -(NSArray *)categoriesForCoordinate:(CPTCoordinate)coordinate;
 -(NSString *)categoryForCoordinate:(CPTCoordinate)coordinate atIndex:(NSUInteger)idx;
 -(NSUInteger)indexOfCategory:(NSString *)category forCoordinate:(CPTCoordinate)coordinate;
+/// @}
+
+/// @name Initialization
+/// @{
+-(instancetype)init NS_DESIGNATED_INITIALIZER;
+-(instancetype)initWithCoder:(NSCoder *)decoder NS_DESIGNATED_INITIALIZER;
 /// @}
 
 @end

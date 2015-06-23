@@ -78,6 +78,15 @@
     return self;
 }
 
+/// @cond
+
+-(instancetype)init
+{
+    return [self initWithText:nil textStyle:nil];
+}
+
+/// @endcond
+
 #pragma mark -
 #pragma mark NSCoding Methods
 
@@ -92,6 +101,12 @@
     [coder encodeDecimal:self.tickLocation forKey:@"CPTAxisLabel.tickLocation"];
 }
 
+/// @endcond
+
+/** @brief Returns an object initialized from data in a given unarchiver.
+ *  @param coder An unarchiver object.
+ *  @return An object initialized from data in a given unarchiver.
+ */
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super init]) ) {
@@ -103,8 +118,6 @@
     }
     return self;
 }
-
-/// @endcond
 
 #pragma mark -
 #pragma mark Layout

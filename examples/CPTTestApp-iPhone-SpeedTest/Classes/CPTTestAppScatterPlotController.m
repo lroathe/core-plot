@@ -31,11 +31,6 @@
 @synthesize yyy1;
 @synthesize yyy2;
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return YES;
-}
-
 #pragma mark -
 #pragma mark Initialization and teardown
 
@@ -48,6 +43,11 @@
     CPTTheme *theme      = [[TestXYTheme alloc] init];
     [newGraph applyTheme:theme];
     self.graph = newGraph;
+
+    newGraph.paddingLeft   = 10.0;
+    newGraph.paddingTop    = 20.0;
+    newGraph.paddingRight  = 10.0;
+    newGraph.paddingBottom = 10.0;
 
     CPTGraphHostingView *hostingView = (CPTGraphHostingView *)self.view;
     hostingView.hostedGraph = newGraph;
@@ -136,17 +136,17 @@
 #pragma mark -
 #pragma mark Plot Data
 
--(double *)valuesForPlotWithIdentifier:(id)identifier field:(NSUInteger)fieldEnum
+-(const double *)valuesForPlotWithIdentifier:(id)identifier field:(NSUInteger)fieldEnum
 {
     if ( fieldEnum == 0 ) {
-        return (double *)self.xxx.bytes;
+        return (const double *)self.xxx.bytes;
     }
     else {
         if ( [identifier isEqualToString:@"Blue Plot"] ) {
-            return (double *)self.yyy1.bytes;
+            return (const double *)self.yyy1.bytes;
         }
         else {
-            return (double *)self.yyy2.bytes;
+            return (const double *)self.yyy2.bytes;
         }
     }
 }

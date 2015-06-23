@@ -750,14 +750,14 @@ static const CGFloat colorLookupTable[10][3] =
 
             if ( [theFill isKindOfClass:[CPTFill class]] ) {
                 CGContextBeginPath(context);
-                AddRoundedRectPath(context, CPTAlignIntegralRectToUserSpace(context, rect), radius);
+                CPTAddRoundedRectPath(context, CPTAlignIntegralRectToUserSpace(context, rect), radius);
                 [theFill fillPathInContext:context];
             }
 
             if ( theLineStyle ) {
                 [theLineStyle setLineStyleInContext:context];
                 CGContextBeginPath(context);
-                AddRoundedRectPath(context, CPTAlignBorderedRectToUserSpace(context, rect, theLineStyle), radius);
+                CPTAddRoundedRectPath(context, CPTAlignBorderedRectToUserSpace(context, rect, theLineStyle), radius);
                 [theLineStyle strokePathInContext:context];
             }
         }
@@ -850,8 +850,8 @@ static const CGFloat colorLookupTable[10][3] =
 
 +(BOOL)needsDisplayForKey:(NSString *)aKey
 {
-    static NSSet *keys = nil;
-    static dispatch_once_t onceToken;
+    static NSSet *keys               = nil;
+    static dispatch_once_t onceToken = 0;
 
     dispatch_once(&onceToken, ^{
         keys = [NSSet setWithArray:@[@"pieRadius",

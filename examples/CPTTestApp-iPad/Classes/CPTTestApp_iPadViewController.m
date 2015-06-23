@@ -76,11 +76,6 @@
     [self.piePlot performSelector:@selector(reloadData) withObject:nil afterDelay:0.4];
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
-
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     if ( UIInterfaceOrientationIsLandscape(fromInterfaceOrientation) ) {
@@ -436,7 +431,7 @@
     }
 
     static CPTMutableTextStyle *whiteText = nil;
-    static dispatch_once_t onceToken;
+    static dispatch_once_t onceToken      = 0;
 
     dispatch_once(&onceToken, ^{
         whiteText = [[CPTMutableTextStyle alloc] init];

@@ -30,7 +30,7 @@ static NSString *const CPTAnimationFinishedKey  = @"CPTAnimationFinishedKey";
 -(void)cancelTimer;
 -(void)update;
 
-dispatch_source_t CreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, dispatch_block_t block);
+dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, dispatch_block_t block);
 
 @end
 /// @endcond
@@ -142,7 +142,7 @@ dispatch_source_t CreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, 
  **/
 +(instancetype)sharedInstance
 {
-    static dispatch_once_t once;
+    static dispatch_once_t once = 0;
     static CPTAnimation *shared;
 
     dispatch_once(&once, ^{
@@ -328,6 +328,10 @@ dispatch_source_t CreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, 
                     started = YES;
                 }
                 if ( !animationOperation.isCanceled ) {
+                    if ( !period.startValue ) {
+                        [period setStartValueFromObject:animationOperation.boundObject propertyGetter:animationOperation.boundGetter];
+                    }
+
                     CGFloat progress = timingFunction(currentTime - startTime, duration);
 
                     NSDictionary *parameters = @{
@@ -394,7 +398,8 @@ dispatch_source_t CreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, 
             if ( [tweenedValue isKindOfClass:[NSDecimalNumber class]] ) {
                 NSDecimal buffer = [(NSDecimalNumber *)tweenedValue decimalValue];
 
-                IMP setterMethod = [boundObject methodForSelector:boundSetter];
+                typedef void (*SetterType)(id, SEL, NSDecimal);
+                SetterType setterMethod = (SetterType)[boundObject methodForSelector : boundSetter];
                 setterMethod(boundObject, boundSetter, buffer);
             }
             else if ( [tweenedValue isKindOfClass:[NSValue class]] ) {
@@ -444,7 +449,7 @@ dispatch_source_t CreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, 
 
 -(void)startTimer
 {
-    self.timer = CreateDispatchTimer(kCPTAnimationFrameRate, self.animationQueue, ^{
+    self.timer = CPTCreateDispatchTimer(kCPTAnimationFrameRate, self.animationQueue, ^{
         [self update];
     });
 }
@@ -460,7 +465,7 @@ dispatch_source_t CreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, 
     }
 }
 
-dispatch_source_t CreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, dispatch_block_t block)
+dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queue, dispatch_block_t block)
 {
     dispatch_source_t newTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
 

@@ -45,17 +45,19 @@
 -(instancetype)initWithArray:(NSArray *)newData dataType:(CPTNumericDataType)newDataType shape:(NSArray *)shapeArray;
 -(instancetype)initWithArray:(NSArray *)newData dataTypeString:(NSString *)newDataTypeString shape:(NSArray *)shapeArray;
 
--(instancetype)initWithData:(NSData *)newData dataType:(CPTNumericDataType)newDataType shape:(NSArray *)shapeArray dataOrder:(CPTDataOrder)order;
+-(instancetype)initWithData:(NSData *)newData dataType:(CPTNumericDataType)newDataType shape:(NSArray *)shapeArray dataOrder:(CPTDataOrder)order NS_DESIGNATED_INITIALIZER;
 -(instancetype)initWithData:(NSData *)newData dataTypeString:(NSString *)newDataTypeString shape:(NSArray *)shapeArray dataOrder:(CPTDataOrder)order;
 -(instancetype)initWithArray:(NSArray *)newData dataType:(CPTNumericDataType)newDataType shape:(NSArray *)shapeArray dataOrder:(CPTDataOrder)order;
 -(instancetype)initWithArray:(NSArray *)newData dataTypeString:(NSString *)newDataTypeString shape:(NSArray *)shapeArray dataOrder:(CPTDataOrder)order;
+
+-(instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 /// @}
 
 /// @name Samples
 /// @{
 -(NSUInteger)sampleIndex:(NSUInteger)idx, ...;
--(void *)samplePointer:(NSUInteger)sample;
--(void *)samplePointerAtIndex:(NSUInteger)idx, ...;
+-(const void *)samplePointer:(NSUInteger)sample;
+-(const void *)samplePointerAtIndex:(NSUInteger)idx, ...;
 -(NSNumber *)sampleValue:(NSUInteger)sample;
 -(NSNumber *)sampleValueAtIndex:(NSUInteger)idx, ...;
 -(NSArray *)sampleArray;

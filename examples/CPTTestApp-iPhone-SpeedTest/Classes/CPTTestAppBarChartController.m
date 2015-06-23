@@ -17,11 +17,6 @@
 
 @synthesize barChart;
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return YES;
-}
-
 #pragma mark -
 #pragma mark Initialization and teardown
 
@@ -40,7 +35,7 @@
     newGraph.plotAreaFrame.masksToBorder = NO;
 
     newGraph.paddingLeft   = 70.0;
-    newGraph.paddingTop    = 20.0;
+    newGraph.paddingTop    = 55.0;
     newGraph.paddingRight  = 20.0;
     newGraph.paddingBottom = 80.0;
 
