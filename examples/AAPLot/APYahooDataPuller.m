@@ -75,7 +75,7 @@ NSTimeInterval timeIntervalForNumberOfWeeks(double numberOfWeeks)
     rep[@"overallLow"]        = [self overallLow];
     rep[@"overallVolumeHigh"] = [self overallVolumeHigh];
     rep[@"overallVolumeLow"]  = [self overallVolumeLow];
-    rep[@"financalData"]      = [self financialData];
+    rep[@"financialData"]     = [self financialData];
     return [NSDictionary dictionaryWithDictionary:rep];
 }
 
@@ -86,7 +86,7 @@ NSTimeInterval timeIntervalForNumberOfWeeks(double numberOfWeeks)
     return success;
 }
 
--(id)initWithDictionary:(NSDictionary *)aDict targetSymbol:(NSString *)aSymbol targetStartDate:(NSDate *)aStartDate targetEndDate:(NSDate *)anEndDate
+-(instancetype)initWithDictionary:(NSDictionary *)aDict targetSymbol:(NSString *)aSymbol targetStartDate:(NSDate *)aStartDate targetEndDate:(NSDate *)anEndDate
 {
     self = [super init];
     if ( self != nil ) {
@@ -95,7 +95,7 @@ NSTimeInterval timeIntervalForNumberOfWeeks(double numberOfWeeks)
         self.overallLow    = [NSDecimalNumber decimalNumberWithDecimal:[aDict[@"overallLow"] decimalValue]];
         self.overallHigh   = [NSDecimalNumber decimalNumberWithDecimal:[aDict[@"overallHigh"] decimalValue]];
         self.endDate       = aDict[@"endDate"];
-        self.financialData = aDict[@"financalData"];
+        self.financialData = aDict[@"financialData"];
 
         self.targetSymbol    = aSymbol;
         self.targetStartDate = aStartDate;
@@ -135,7 +135,7 @@ NSTimeInterval timeIntervalForNumberOfWeeks(double numberOfWeeks)
     return localPlistDict;
 }
 
--(id)initWithTargetSymbol:(NSString *)aSymbol targetStartDate:(NSDate *)aStartDate targetEndDate:(NSDate *)anEndDate
+-(instancetype)initWithTargetSymbol:(NSString *)aSymbol targetStartDate:(NSDate *)aStartDate targetEndDate:(NSDate *)anEndDate
 {
     NSDictionary *cachedDictionary = [self dictionaryForSymbol:aSymbol];
 
@@ -144,16 +144,16 @@ NSTimeInterval timeIntervalForNumberOfWeeks(double numberOfWeeks)
     }
 
     NSMutableDictionary *rep = [NSMutableDictionary dictionaryWithCapacity:7];
-    rep[@"symbol"]       = aSymbol;
-    rep[@"startDate"]    = aStartDate;
-    rep[@"endDate"]      = anEndDate;
-    rep[@"overallHigh"]  = [NSDecimalNumber notANumber];
-    rep[@"overallLow"]   = [NSDecimalNumber notANumber];
-    rep[@"financalData"] = @[];
+    rep[@"symbol"]        = aSymbol;
+    rep[@"startDate"]     = aStartDate;
+    rep[@"endDate"]       = anEndDate;
+    rep[@"overallHigh"]   = [NSDecimalNumber notANumber];
+    rep[@"overallLow"]    = [NSDecimalNumber notANumber];
+    rep[@"financialData"] = @[];
     return [self initWithDictionary:rep targetSymbol:aSymbol targetStartDate:aStartDate targetEndDate:anEndDate];
 }
 
--(id)init
+-(instancetype)init
 {
     NSTimeInterval secondsAgo = -timeIntervalForNumberOfWeeks(14.0); //12 weeks ago
     NSDate *start             = [NSDate dateWithTimeIntervalSinceNow:secondsAgo];
